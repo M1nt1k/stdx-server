@@ -26,11 +26,15 @@
 Ставим питон от версии 3.9. Заходим в папку с проектом. В консоли пишем:
 
 *python -m venv .venv*
+
 *.venv\Scripts\activate.ps1*
+
 *python -m pip install -U pip*
+
 *pip install -r req.txt*
 
 После установки django запускаем сервер:
 
 *cd stdx*
+
 *python manage.py runserver*
