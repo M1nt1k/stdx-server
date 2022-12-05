@@ -1,23 +1,36 @@
 # stdx-server
-*Установка виртуального окружения должна работать через батник(но это не точно)*
 
 Запуск локалки происходит через start_server.bat
 #
 <b>API Requests:</b>
 
-1./api/v1/tasks/ - Все таски (GET, POST)
+0. /api/v2/ - Получаем все ссылки, которые есть (GET)
 
-2./api/v1/tasks/1 -  - Отедльный таск (GET, PUT, DELETE)
+1. /api/v2/users/ - Все юзвери (GET, POST)
 
-3./api/v1/category/ - Все предметы
+2. /api/v2/users/<pk> - Отдельный юзверь (GET, PUT, DELETE)
 
-4./api/v1/university/ - Все универы
+3. /api/v2/tasks/ - Все таски (GET, POST)
+
+4. /api/v2/tasks/<pk> - Отдельный таск (GET, PUT, DELETE)
+
+5. /api/v2/files/ - Все таски (GET, POST)
+
+6. /api/v2/files/<pk> - Отдельный файл (GET, PUT, DELETE)
+
+7. /api/v2/categories/ - Все предметы (GET)
+
+8. /api/v2/universities/ - Все универы (GET)
 #
-<b>Если не робит с окружением</b>
-Ставим питон от версии 3.9. Заходим в папку с проектом. в консоли пишем
+<b>Запуск сервера</b>
+Ставим питон от версии 3.9. Заходим в папку с проектом. В консоли пишем:
 
-*python pip install -r req.txt*
+*python -m venv .venv*
+*.venv\Scripts\activate.ps1*
+*python -m pip install -U pip*
+*pip install -r req.txt*
 
-Для запуска сервера переходим в директорию *stdx* и пишем
+После установки django запускаем сервер:
 
+*cd stdx*
 *python manage.py runserver*
