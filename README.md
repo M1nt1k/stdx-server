@@ -1,7 +1,5 @@
 # stdx-server
 
-Запуск локалки происходит через start_server.bat
-#
 <b>API Requests:</b>
 
 0. /api/v2/ - Получаем все ссылки, которые есть (GET)
