@@ -1,5 +1,1 @@
 .venv
-.dockerignor
-.env.dev
-docker-compose.yml
-Dokerfile

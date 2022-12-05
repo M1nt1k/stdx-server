@@ -1,34 +1,29 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 
 from . import serializers
 from django.contrib.auth.models import User
-from .models import Task, Responses, Category, University
+from .models import Task, Responses, Category, University, File
 from .permissions import IsOwnerOrReadOnly
 
-class UserList(generics.ListCreateAPIView):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = serializers.UserSerializer
-
-class TaskList(generics.ListCreateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = serializers.TaskSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
-class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
+class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = serializers.TaskSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
 
-class ResponsesList(generics.ListCreateAPIView):
+class FilesViewSet(viewsets.ModelViewSet):
+    queryset = File.objects.all()
+    serializer_class = serializers.FilesSerializer
+
+    def pre_save(self, obj):
+        obj.file = self.request.FILES.get('file')
+
+class ResponsesViewSet(viewsets.ModelViewSet):
     queryset = Responses.objects.all()
     serializer_class = serializers.ResponsesSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -36,13 +31,7 @@ class ResponsesList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-class ResponsesDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Responses.objects.all()
-    serializer_class = serializers.ResponsesSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
-
-class CategoryList(generics.ListAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -50,23 +39,10 @@ class CategoryList(generics.ListAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-class CategoryDetail(generics.RetrieveUpdateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = serializers.TaskSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
-
-class UniversityList(generics.ListAPIView):
+class UniversityViewSet(viewsets.ModelViewSet):
     queryset = University.objects.all()
     serializer_class = serializers.UniversitySerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-class UniversityDetail(generics.RetrieveUpdateAPIView):
-    queryset = University.objects.all()
-    serializer_class = serializers.TaskSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
-
